@@ -1,9 +1,9 @@
-import { UserButton } from "@clerk/nextjs";
+import { SignIn } from "@clerk/nextjs";
 
-export default function Home() {
+export default function Page() {
 	return (
-		<div>
-			<UserButton afterSignOutUrl='/' />
+		<div className="flex h-screen w-screen items-center justify-center">
+			<SignIn afterSignInUrl={"/"} />
 		</div>
 	);
 }
