@@ -6,7 +6,9 @@ export type ElementsType = "TextField"
 export type FormElement = {
   type: ElementsType,
   construct:(id:string)=>FormElementInstance,
-  designerComponent: React.FC, 
+  designerComponent: React.FC<{
+    elementInstance:FormElementInstance
+  }>, 
   designerBtnElement: {
     icon: React.ElementType,
     label:string
