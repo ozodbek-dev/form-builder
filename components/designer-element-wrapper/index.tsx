@@ -9,7 +9,8 @@ import { cn } from "@/lib/utils";
 
 function DesignerElementWrapper({ element }: { element: FormElementInstance }) {
 	const [mouseIsOver, setMouseIsover] = useState<boolean>(false);
-	const { removeElement } = useDesignerContext();
+	const { removeElement, selectedElement, setSelectedElement } = useDesignerContext();
+	console.log("🚀 ~ file: index.tsx:13 ~ DesignerElementWrapper ~ selectedElement:", selectedElement)
 
 	const topHalf = useDroppable({
 		id: `${element.id}-top`,
@@ -34,7 +35,8 @@ function DesignerElementWrapper({ element }: { element: FormElementInstance }) {
 			elementId: element.id,
 			isDesignerElement: true,
 		},
-	});
+  });
+  
 	if (draggable.isDragging) return null;
 	const DesignerElement = FormElements[element.type].designerComponent;
 	return (
@@ -43,8 +45,18 @@ function DesignerElementWrapper({ element }: { element: FormElementInstance }) {
 			{...draggable.listeners}
 			{...draggable.attributes}
 			className='relative h-[120px] flex flex-col  text-foreground hover:cursor-pointer rounded-md ring-1 ring-a ccent ring-inset w-full'
-			onMouseEnter={() => setMouseIsover(true)}
-			onMouseLeave={() => setMouseIsover(false)}
+			onMouseEnter={e => {
+				e.stopPropagation();
+				setMouseIsover(true);
+			}}
+			onMouseLeave={e => {
+				e.stopPropagation();
+				setMouseIsover(false);
+			}}
+			onClick={e => {
+				e.stopPropagation();
+				setSelectedElement(element);
+			}}
 		>
 			<div ref={topHalf.setNodeRef} className='absolute w-full rounded-t-md h-1/2' />
 			<div ref={bottomHalf.setNodeRef} className='absolute  w-full bottom-0 rounded-b-md h-1/2' />

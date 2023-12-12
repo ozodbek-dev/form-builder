@@ -8,7 +8,7 @@ import { idGenerator } from "@/lib/idGenerator";
 import DesignerElementWrapper from "../designer-element-wrapper";
 
 function Designer() {
-	const { elements, addElement } = useDesignerContext();
+	const { elements, addElement, setSelectedElement, selectedElement } = useDesignerContext();
 	const droppable = useDroppable({
 		id: "designer-drop-area",
 		data: {
@@ -32,7 +32,9 @@ function Designer() {
 
 	return (
 		<div className=' flex w-full h-full'>
-			<div className='w-full p-4'>
+			<div className='w-full p-4' onClick={() => {
+				if(selectedElement) setSelectedElement(null)
+			}}>
 				<div
 					ref={droppable.setNodeRef}
 					className={cn(
