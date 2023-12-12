@@ -26,6 +26,7 @@ yarn-debug.log*
 yarn-error.log*
 
 # Secret file
+.*.env
 .env*
 .env*.local
 # vercel
