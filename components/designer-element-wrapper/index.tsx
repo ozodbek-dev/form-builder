@@ -10,7 +10,6 @@ import { cn } from "@/lib/utils";
 function DesignerElementWrapper({ element }: { element: FormElementInstance }) {
 	const [mouseIsOver, setMouseIsover] = useState<boolean>(false);
 	const { removeElement, selectedElement, setSelectedElement } = useDesignerContext();
-	console.log("🚀 ~ file: index.tsx:13 ~ DesignerElementWrapper ~ selectedElement:", selectedElement)
 
 	const topHalf = useDroppable({
 		id: `${element.id}-top`,
