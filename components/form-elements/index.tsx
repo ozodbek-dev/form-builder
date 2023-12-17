@@ -1,7 +1,6 @@
-import React from 'react'
-import TextFieldFormElement from '../fields/text-field';
-export type ElementsType = "TextField"
-
+import React from "react";
+import TextFieldFormElement from "../fields/text-field";
+export type ElementsType = "TextField";
 
 export type FormElement = {
 	type: ElementsType;
@@ -13,23 +12,22 @@ export type FormElement = {
 		icon: React.ElementType;
 		label: string;
 	};
-	formComponent: React.FC;
+	formComponent: React.FC<{ elementInstance: FormElementInstance }>;
 	propertiesComponent: React.FC<{
 		elementInstance: FormElementInstance;
 	}>;
 };
 
 export type FormElementInstance = {
-  id: string,
-  type: ElementsType,
-  extraAttributes?:Record<string,any>
-}
+	id: string;
+	type: ElementsType;
+	extraAttributes?: Record<string, any>;
+};
 
 type FormElementsType = {
 	[key in ElementsType]: FormElement;
 };
 
-
 export const FormElements: FormElementsType = {
-  TextField:TextFieldFormElement
-} 
+	TextField: TextFieldFormElement,
+};

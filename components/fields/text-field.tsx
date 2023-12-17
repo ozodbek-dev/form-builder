@@ -7,6 +7,7 @@ import { Label } from "../ui/label";
 import { Input } from "../ui/input";
 import PropertiesComponent from "./components/properties-component";
 import { z } from "zod";
+import FormComponent from "./components/form-component";
 const type: ElementsType = "TextField";
 
 export const extraAttributes = {
@@ -35,7 +36,7 @@ export const TextFieldFormElement: FormElement = {
 		label: "Text Field",
 	},
 	designerComponent: DesignerComponent,
-	formComponent: () => <div>Form Component</div>,
+	formComponent: FormComponent,
 	propertiesComponent: PropertiesComponent,
 };
 

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import DesignerSidebar from "../designer-sidebar";
 import { DragEndEvent, useDndMonitor, useDroppable } from "@dnd-kit/core";
 import { cn } from "@/lib/utils";

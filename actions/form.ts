@@ -92,3 +92,10 @@ export async function GetFormById(id: number) {
 		},
 	});
 }
+
+export async function UpdateFormContent(id:number, jsonContent:string) {
+	const user = await currentUser();
+	if (!user) {
+		throw new UserNotFoundError();
+	}
+}
