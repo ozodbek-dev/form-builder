@@ -7,6 +7,7 @@ import { ClerkProvider } from "@clerk/nextjs";
 import { Toaster } from "@/components/ui/toaster";
 import DesignerContextProvider from "@/context/designer-context";
 
+import NextTopLoader from "nextjs-toploader";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -19,6 +20,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 		<ClerkProvider>
 			<html lang='en'>
 				<body className={inter.className}>
+					<NextTopLoader/>
 					<DesignerContextProvider>
 						<ThemeProvider attribute='class' defaultTheme='system' enableSystem disableTransitionOnChange>
 							{children}
