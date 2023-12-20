@@ -8,17 +8,18 @@ import { cn } from "@/lib/utils";
 interface IProps {
 	elementInstance: FormElementInstance;
 	submitValue?: SubmitFunction;
-	isInvalid?:boolean
+	isInvalid?: boolean;
+	defaultValue?: string;
 }
 
-export default function FormComponent({ elementInstance, submitValue, isInvalid }: IProps) {
+export default function FormComponent({ elementInstance, submitValue, isInvalid, defaultValue }: IProps) {
 	const element = elementInstance as CustomInstance;
 	const { label, placeholder, helperText, required } = element.extraAttributes;
-	const [value, setValue] = useState<string>("");
+	const [value, setValue] = useState<string>(defaultValue || "");
 	const [error, setError] = useState<boolean>(false);
 
 	useEffect(() => {
-			setError(isInvalid===true);
+		setError(isInvalid === true);
 	}, [isInvalid]);
 
 	return (
@@ -30,10 +31,10 @@ export default function FormComponent({ elementInstance, submitValue, isInvalid 
 				placeholder={placeholder}
 				className={cn(error && "border-red-500")}
 				onChange={e => setValue(e.target.value)}
-				onBlur={(e) => {
+				onBlur={e => {
 					if (!submitValue) return;
 					const valid = TextFieldFormElement.validate(element, e.target.value);
-					setError(valid);
+					setError(!valid);
 					if (!valid) return;
 					submitValue(element.id, value);
 				}}

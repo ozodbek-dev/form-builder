@@ -142,3 +142,23 @@ export async function GetFormContentByUrl(url: string) {
 		}
 	});
 }
+
+export async function SubmitForm(formUrl:string, content: string) {
+	return await prisma.form.update({
+		where: {
+			shareURL: formUrl,
+			published: true
+		},
+		data: {
+			submissions: {
+				increment: 1,
+			},
+			FormSubmissions: {
+				create: {
+					content
+				}
+			}
+		},
+	});
+	
+}

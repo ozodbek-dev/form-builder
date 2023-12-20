@@ -35,7 +35,7 @@ model Form {
 
 model FormSubmissions {
   id        Int      @id @default(autoincrement())
-  createdAt DateTime
+  createdAt DateTime @default(now()) @db.Timestamptz(3)
   formId    Int
   form      Form     @relation(fields: [formId], references: [id])
 
