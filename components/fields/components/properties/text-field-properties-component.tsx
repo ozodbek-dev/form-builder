@@ -1,6 +1,6 @@
 import { FormElementInstance } from "@/components/form-elements";
 import React, { useEffect } from "react";
-import { CustomInstance, propertiesSchema } from "../text-field";
+import { CustomInstance, propertiesSchema } from "../../text-field";
 import useDesignerContext from "@/hooks/useDesigner";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -10,7 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 
 type PropertiesFormSchemaType = z.infer<typeof propertiesSchema>;
-function PropertiesComponent({ elementInstance }: { elementInstance: FormElementInstance }) {
+function TextFieldPropertiesComponent({ elementInstance }: { elementInstance: FormElementInstance }) {
 	const { updateElement } = useDesignerContext();
 	const element = elementInstance as CustomInstance;
 	const form = useForm<PropertiesFormSchemaType>({
@@ -26,7 +26,6 @@ function PropertiesComponent({ elementInstance }: { elementInstance: FormElement
 	useEffect(() => {
 		form.reset(element.extraAttributes);
 	}, [element, form]);
-
 	function applyChanges(values: PropertiesFormSchemaType) {
 		const { label, placeholder, helperText, required } = values;
 		updateElement(element.id, {
@@ -113,13 +112,10 @@ function PropertiesComponent({ elementInstance }: { elementInstance: FormElement
 						<FormItem className='flex items-center justify-between rounded-lg border p-3 shadow-sm'>
 							<div className='space-y-0 5'>
 								<FormLabel>Required</FormLabel>
-								<FormDescription>Is field required?  </FormDescription>
+								<FormDescription>Is field required? </FormDescription>
 							</div>
 							<FormControl>
-								<Switch
-									checked={field.value}
-									onCheckedChange={field.onChange}
-								/>
+								<Switch checked={field.value} onCheckedChange={field.onChange} />
 							</FormControl>
 							<FormMessage />
 						</FormItem>
@@ -130,4 +126,6 @@ function PropertiesComponent({ elementInstance }: { elementInstance: FormElement
 	);
 }
 
-export default PropertiesComponent;
+
+
+export default TextFieldPropertiesComponent;

@@ -1,5 +1,5 @@
 import { FormElementInstance, SubmitFunction } from "@/components/form-elements";
-import TextFieldFormElement, { CustomInstance } from "../text-field";
+import TextFieldFormElement, { CustomInstance } from "../../text-field";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { useEffect, useState } from "react";
@@ -12,7 +12,7 @@ interface IProps {
 	defaultValue?: string;
 }
 
-export default function FormComponent({ elementInstance, submitValue, isInvalid, defaultValue }: IProps) {
+export default function TextFieldFormComponent({ elementInstance, submitValue, isInvalid, defaultValue }: IProps) {
 	const element = elementInstance as CustomInstance;
 	const { label, placeholder, helperText, required } = element.extraAttributes;
 	const [value, setValue] = useState<string>(defaultValue || "");
