@@ -1,12 +1,15 @@
-import { GetFormById } from "@/actions/form";
+import { GetFormById, GetFormWithSubmissions } from "@/actions/form";
 import FormLinkShare from "@/components/form-link-share";
 import StatsCard from "@/components/stats-card";
 import VisitBtn from "@/components/visit-btn";
-import React from "react";
+import React, { ReactNode } from "react";
 import { LuView } from "react-icons/lu";
 import { HiCursorClick } from "react-icons/hi";
 import { TbArrowBounce } from "react-icons/tb";
 import { FaWpforms } from "react-icons/fa";
+import { ElementsType, FormElementInstance } from "@/components/form-elements";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { formatDistance } from "date-fns";
 
 export default async function BuilderPage({
 	params,
@@ -76,16 +79,97 @@ export default async function BuilderPage({
 				/>
 			</div>
 
-			<div className=" container pt-10">
-				<SubmissionsTable id={form.id}  />
+			<div className=' container pt-10'>
+				<SubmissionsTable id={form.id} />
 			</div>
 		</>
 	);
 }
 
+interface IColumns {
+	id: string;
+	label: string;
+	required: boolean;
+	type: ElementsType;
+}
 
-function SubmissionsTable({ id }: { id: number }) {
-	return <>
-		<h1 className="text-2xl font-bold my-4">Submissions</h1>
-	</>;
+type Row = {
+	[key: string]: string;
+} & { submittedAt: Date };
+
+async function SubmissionsTable({ id }: { id: number }) {
+	const form = await GetFormWithSubmissions(id);
+	if (!form) {
+		throw new Error("Form not found");
+	}
+
+	const formElements = JSON.parse(form.content) as FormElementInstance[];
+
+	const columns: IColumns[] = [];
+
+	formElements.forEach(element => {
+		switch (element.type) {
+			case "TextField":
+				columns.push({
+					id: element.id,
+					label: element.extraAttributes?.label,
+					required: element.extraAttributes?.required || false,
+					type: element.type,
+				});
+				break;
+			default:
+				break;
+		}
+	});
+
+	const rows: Row[] = [];
+
+	form.FormSubmissions.forEach(submission => {
+		const content = JSON.parse(submission.content);
+		rows.push({
+			...content,
+			submittedAt: new Date(submission.createdAt),
+		});
+	});
+
+	return (
+		<>
+			<h1 className='text-2xl font-bold my-4'>Submissions</h1>
+			<div className='rounded-md'>
+				<Table>
+					<TableHeader>
+						<TableRow>
+							{columns.map(column => (
+								<TableHead key={column.id} className='uppercase'>
+									{column.label}
+								</TableHead>
+							))}
+							<TableHead className='text-muted-foreground text-right uppercase'>Submitted at</TableHead>
+						</TableRow>
+					</TableHeader>
+
+					<TableBody>
+						{rows.map((row, idx) => (
+							<TableRow key={idx}>
+								{columns.map(column => (
+									<RowCell key={column.id} value={row[column.id]} type={column.type} />
+								))}
+								<TableCell className='text-muted-foreground text-right'>
+									{formatDistance(row.submittedAt, new Date(), {
+										addSuffix: true,
+									})}
+								</TableCell>
+							</TableRow>
+						))}
+					</TableBody>
+				</Table>
+			</div>
+		</>
+	);
+}
+
+function RowCell({ value, type }: { value: string; type: ElementsType }) {
+	let node: ReactNode = value;
+
+	return <TableCell>{node}</TableCell>;
 }
