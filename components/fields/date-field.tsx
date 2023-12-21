@@ -1,26 +1,27 @@
 "use client";
 
 import { ElementsType, FormElement, FormElementInstance } from "../form-elements";
-import { MdTextFields } from "react-icons/md";
 
 import { z } from "zod";
 import { TextFieldFormComponent } from "./components/form-component";
 import { TextFieldPropertiesComponent } from "./components/properties";
 import { TextFieldDesignerComponent } from "./components/designer";
+import { BsFillCalendarDateFill } from "react-icons/bs";
+import DateFieldDesignerComponent from "./components/designer/date-field-designer";
+import DateFieldFormComponent from "./components/form-component/date-field-form-component";
+import DateFieldPropertiesComponent from "./components/properties/date-field-properties-component";
 
-const type: ElementsType = "TextField";
+const type: ElementsType = "DateField";
 
 export const extraAttributes = {
-	label: "Text Field",
-	helperText: "Helper text",
+	label: "Date Field",
+	helperText: "Pick a date",
 	required: false,
-	placeholder: "Value here...",
 };
 
 export const propertiesSchema = z.object({
 	label: z.string().min(2).max(50),
 	helperText: z.string().max(200),
-	placeholder: z.string().max(50),
 	required: z.boolean().default(false),
 });
 
@@ -28,7 +29,7 @@ export type CustomInstance = FormElementInstance & {
 	extraAttributes: typeof extraAttributes;
 };
 
-export const TextFieldFormElement: FormElement = {
+ const DateFieldFormElement: FormElement = {
 	type,
 	construct: (id: string) => ({
 		id,
@@ -36,12 +37,12 @@ export const TextFieldFormElement: FormElement = {
 		extraAttributes,
 	}),
 	designerBtnElement: {
-		icon: MdTextFields,
-		label: "Text Field",
+		icon: BsFillCalendarDateFill,
+		label: "Date Field",
 	},
-	designerComponent: TextFieldDesignerComponent,
-	formComponent: TextFieldFormComponent,
-	propertiesComponent: TextFieldPropertiesComponent,
+	designerComponent: DateFieldDesignerComponent,
+	formComponent: DateFieldFormComponent,
+	propertiesComponent: DateFieldPropertiesComponent,
 	validate: (formElement: FormElementInstance, currentValue: string) => {
 		const elementn = formElement as CustomInstance;
 		if (elementn.extraAttributes.required) {
@@ -54,4 +55,4 @@ export const TextFieldFormElement: FormElement = {
 
 
 
-export default TextFieldFormElement;
+export default DateFieldFormElement;
