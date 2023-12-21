@@ -30,6 +30,7 @@ export default function NumberFieldFormComponent({ elementInstance, submitValue,
 			</Label>
 			<Input
 				placeholder={placeholder}
+				type="number"
 				className={cn(error && "border-red-500")}
 				onChange={e => setValue(e.target.value)}
 				onBlur={e => {

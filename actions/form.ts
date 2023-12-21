@@ -23,17 +23,17 @@ export async function GetFormStats() {
 
 	const visits = stats._sum.visits || 0;
 	const submissions = stats._sum.submissions || 0;
-	let submissioinsRete = 0;
+	let submissioinsRate = 0;
 	if (visits > 0) {
-		submissioinsRete = (submissions / visits) * 100;
+		submissioinsRate = (submissions / visits) * 100;
 	}
 
-	const bounceRate = 100 - submissioinsRete;
+	const bounceRate = 100 - submissioinsRate;
 
 	return {
 		visits,
 		submissions,
-		submissioinsRete,
+		submissioinsRate,
 		bounceRate,
 	};
 }

@@ -9,7 +9,9 @@ import { TbArrowBounce } from "react-icons/tb";
 import { FaWpforms } from "react-icons/fa";
 import { ElementsType, FormElementInstance } from "@/components/form-elements";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { formatDistance } from "date-fns";
+import { format, formatDistance } from "date-fns";
+import { Badge } from "@/components/ui/badge";
+import { Checkbox } from "@/components/ui/checkbox";
 
 export default async function BuilderPage({
 	params,
@@ -49,7 +51,7 @@ export default async function BuilderPage({
 					title='Total Visits'
 					icon={<LuView className='text-blue-600' />}
 					helperText='All time from visits'
-					value={visits.toLocaleString() + "%" || ""}
+					value={visits.toLocaleString() || ""}
 					loading={false}
 					className='shadow-md shadow-blue-600'
 				/>
@@ -57,7 +59,7 @@ export default async function BuilderPage({
 					title='Total Submitions'
 					icon={<FaWpforms className='text-yellow-600' />}
 					helperText='All time from submitions'
-					value={visits.toLocaleString() + "%" || ""}
+					value={submissions.toLocaleString() || ""}
 					loading={false}
 					className='shadow-md shadow-yellow-600'
 				/>
@@ -65,7 +67,7 @@ export default async function BuilderPage({
 					title='Submission Rate'
 					icon={<HiCursorClick className='text-green-600' />}
 					helperText='Visits that result from submitions '
-					value={visits.toLocaleString() + "%" || ""}
+					value={submissioinsRete.toLocaleString() + "%" || ""}
 					loading={false}
 					className='shadow-md shadow-green-600'
 				/>
@@ -73,7 +75,7 @@ export default async function BuilderPage({
 					title='Bounce Rate'
 					icon={<TbArrowBounce className='text-red-600' />}
 					helperText='Visits that leaves without interaction '
-					value={visits.toLocaleString() + "%" || ""}
+					value={bounceRate.toLocaleString() + "%" || ""}
 					loading={false}
 					className='shadow-md shadow-red-600'
 				/>
@@ -110,6 +112,11 @@ async function SubmissionsTable({ id }: { id: number }) {
 	formElements.forEach(element => {
 		switch (element.type) {
 			case "TextField":
+			case "DateField":
+			case "CheckBoxField":
+			case "SelectField":
+			case "CheckBoxField":
+			case "NumberField":
 				columns.push({
 					id: element.id,
 					label: element.extraAttributes?.label,
@@ -170,6 +177,20 @@ async function SubmissionsTable({ id }: { id: number }) {
 
 function RowCell({ value, type }: { value: string; type: ElementsType }) {
 	let node: ReactNode = value;
+
+	switch (type) {
+		case "DateField": {
+			if (!value) break;
+			const date = new Date(value);
+			node = <Badge variant={"outline"}>{format(date, "dd/MM/yyyy")}</Badge>;
+			break;
+		}
+		case "CheckBoxField": {
+			const checked = value === "true";
+			node = <Checkbox checked={checked} disabled />;
+			break;
+		}
+	}
 
 	return <TableCell>{node}</TableCell>;
 }

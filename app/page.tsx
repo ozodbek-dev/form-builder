@@ -56,7 +56,7 @@ function StatsCards(props: StatsCardProps) {
 				title='Total Visits'
 				icon={<LuView className='text-blue-600' />}
 				helperText='All time from visits'
-				value={data.visits.toLocaleString() + "%" || ""}
+				value={data.visits.toString() || ""}
 				loading={loading}
 				className='shadow-md shadow-blue-600'
 			/>
@@ -64,7 +64,7 @@ function StatsCards(props: StatsCardProps) {
 				title='Total Submitions'
 				icon={<FaWpforms className='text-yellow-600' />}
 				helperText='All time from submitions'
-				value={data.visits.toLocaleString() + "%" || ""}
+				value={data.submissions.toLocaleString() || ""}
 				loading={loading}
 				className='shadow-md shadow-yellow-600'
 			/>
@@ -72,7 +72,7 @@ function StatsCards(props: StatsCardProps) {
 				title='Submission Rate'
 				icon={<HiCursorClick className='text-green-600' />}
 				helperText='Visits that result from submitions '
-				value={data.visits.toLocaleString() + "%" || ""}
+				value={data.submissioinsRate.toLocaleString() || ""}
 				loading={loading}
 				className='shadow-md shadow-green-600'
 			/>
@@ -80,7 +80,7 @@ function StatsCards(props: StatsCardProps) {
 				title='Bounce Rate'
 				icon={<TbArrowBounce className='text-red-600' />}
 				helperText='Visits that leaves without interaction '
-				value={data.visits.toLocaleString() + "%" || ""}
+				value={data.bounceRate.toLocaleString() + "%" || ""}
 				loading={loading}
 				className='shadow-md shadow-red-600'
 			/>
