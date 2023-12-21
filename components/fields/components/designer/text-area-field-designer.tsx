@@ -1,9 +1,9 @@
 import { FormElementInstance } from "@/components/form-elements";
-import { CustomInstance } from "../../number-field";
+import { CustomInstance } from "../../text-area-field";
 import { Label } from "@/components/ui/label";
-import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
 
-export default function NumberFieldDesignerComponent({ elementInstance }: { elementInstance: FormElementInstance }) {
+export default function TextAreaFieldDesignerComponent({ elementInstance }: { elementInstance: FormElementInstance }) {
 	const element = elementInstance as CustomInstance;
 	const { label, placeholder, helperText, required } = element.extraAttributes;
 
@@ -12,7 +12,7 @@ export default function NumberFieldDesignerComponent({ elementInstance }: { elem
 			<Label>
 				{label} {required && "*"}
 			</Label>
-			<Input readOnly disabled type="number" placeholder={placeholder} />
+			<Textarea rows={1} readOnly disabled placeholder={placeholder} />
 			{helperText && <p className='text-muted-foreground text-[0.8rem]'>{helperText}</p>}
 		</div>
 	);

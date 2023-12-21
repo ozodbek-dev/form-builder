@@ -3,18 +3,19 @@
 import { ElementsType, FormElement, FormElementInstance } from "../form-elements";
 
 import { z } from "zod";
-import { TextFieldPropertiesComponent } from "./components/properties";
-import { NumberFieldDesignerComponent } from "./components/designer";
-import { Bs123 } from "react-icons/bs";
-import NumberFieldFormComponent from "./components/form-component/number-field-form-component";
+import { TextAreaFieldDesignerComponent } from "./components/designer";
+import { BsTextareaResize } from "react-icons/bs";
+import TextAreaFieldPropertiesComponent from "./components/properties/text-area-field-properties-component";
+import TextAreaFieldFormComponent from "./components/form-component/text-area-field-form-component";
 
-const type: ElementsType = "NumberField";
+const type: ElementsType = "TextAreaField";
 
 export const extraAttributes = {
-	label: "Number Field",
+	label: "TextArea Field",
 	helperText: "Helper text",
 	required: false,
 	placeholder: "Value here...",
+	rows: 1
 };
 
 export const propertiesSchema = z.object({
@@ -22,13 +23,14 @@ export const propertiesSchema = z.object({
 	helperText: z.string().max(200),
 	placeholder: z.string().max(50),
 	required: z.boolean().default(false),
+	rows: z.number().min(1).max(10),
 });
 
 export type CustomInstance = FormElementInstance & {
 	extraAttributes: typeof extraAttributes;
 };
 
-const NumberFieldFormElement: FormElement = {
+const TextAreaFieldFormElement: FormElement = {
 	type,
 	construct: (id: string) => ({
 		id,
@@ -36,12 +38,12 @@ const NumberFieldFormElement: FormElement = {
 		extraAttributes,
 	}),
 	designerBtnElement: {
-		icon: Bs123,
-		label: "Number Field",
+		icon: BsTextareaResize,
+		label: "TextArea Field",
 	},
-	designerComponent: NumberFieldDesignerComponent,
-	formComponent: NumberFieldFormComponent,
-	propertiesComponent: TextFieldPropertiesComponent,
+	designerComponent: TextAreaFieldDesignerComponent,
+	formComponent: TextAreaFieldFormComponent,
+	propertiesComponent: TextAreaFieldPropertiesComponent,
 	validate: (formElement: FormElementInstance, currentValue: string) => {
 		const elementn = formElement as CustomInstance;
 		if (elementn.extraAttributes.required) {
@@ -54,4 +56,4 @@ const NumberFieldFormElement: FormElement = {
 
 
 
-export default NumberFieldFormElement;
+export default TextAreaFieldFormElement;

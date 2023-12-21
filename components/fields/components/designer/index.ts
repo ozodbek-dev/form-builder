@@ -4,4 +4,5 @@ export { default as SubTitleFieldDesignerComponent } from "./subtitle-field-desi
 export { default as ParagraphFieldDesignerComponent } from "./paragraph-field-designer";
 export { default as SeparatorFieldDesignerComponent } from "./separator-field-designer"
 export { default as SpacerFieldDesignerComponent } from './spacer-field-designer'
-export {default as NumberFieldDesignerComponent} from './number-field-designer'
+export { default as NumberFieldDesignerComponent } from './number-field-designer'
+export {default as TextAreaFieldDesignerComponent} from './text-area-field-designer'
